@@ -5,6 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import fetcher from "../utils/fetcher";
 import SerieCard from "./SerieCard";
+import SeriesChart from "./SeriesChart";
 import { useIntl, FormattedMessage } from "react-intl";
 
 const fetchSeries = async (locale) => {
@@ -70,6 +71,11 @@ export default function Layout() {
             <FormattedMessage id="loading" />
           </h4>
         )}
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <SeriesChart series={series} />
+        </Col>
       </Row>
     </Container>
   );
