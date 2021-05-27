@@ -1,7 +1,10 @@
 {
+    "tvSeries": "T.V. Series",
     "name": "Name",
     "channel": "Channel",
     "seasons": "Seasons",
     "episodes": "Episodes",
-    "release": "Release"
+    "release": "Release",
+    "imageError": "Error while loading image.",
+    "loading": "Loading..."
 }

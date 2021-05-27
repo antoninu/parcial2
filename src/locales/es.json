@@ -1,7 +1,10 @@
 {
+    "tvSeries": "Series de T.V.",
     "name": "Nombre",
     "channel": "Canal",
     "seasons": "Temporadas",
     "episodes": "Episodios",
-    "release": "Estreno"
+    "release": "Estreno",
+    "imageError": "Error al cargar la imagen.",
+    "loading": "Cargando..."
 }

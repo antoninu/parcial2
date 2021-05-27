@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import fetcher from "../utils/fetcher";
 import SerieCard from "./SerieCard";
-import { useIntl } from "react-intl";
+import { useIntl, FormattedMessage } from "react-intl";
 
 const fetchSeries = async (locale) => {
   const series = await fetcher(
@@ -22,17 +22,37 @@ export default function Layout() {
   const [selectedSerie, setSelectedSerie] = useState(null);
   const intl = useIntl();
 
-  useEffect(async () => {
-    const series = await fetchSeries(intl.locale);
-    setSeries(series);
-    setSelectedSerie(series[0]);
-  }, []);
+  useEffect(() => {
+    const updateSeries = async () => {
+      const series = await fetchSeries(intl.locale);
+      localStorage.setItem("series", JSON.stringify(series));
+      setSeries(series);
+      setSelectedSerie(series[0]);
+    };
+
+    if (!navigator.onLine) {
+      console.log("navigator offline");
+      if (localStorage.getItem("series") === null) {
+        setSeries(null);
+        setSelectedSerie(null);
+      } else {
+        let savedSeries = JSON.parse(localStorage.getItem("series"));
+        console.log("stores series retrieved");
+        setSeries(savedSeries);
+        setSelectedSerie(savedSeries[0]);
+      }
+    } else {
+      updateSeries();
+    }
+  }, [intl.locale]);
 
   return (
     <Container>
       <Row>
         <Col xs={12}>
-          <h1 style={{ textAlign: "left" }}>T.V. Series</h1>
+          <h1 style={{ textAlign: "left" }}>
+            <FormattedMessage id="tvSeries" />
+          </h1>
         </Col>
       </Row>
       <Row>
@@ -46,7 +66,9 @@ export default function Layout() {
             </Col>
           </React.Fragment>
         ) : (
-          <h4>Cargando...</h4>
+          <h4>
+            <FormattedMessage id="loading" />
+          </h4>
         )}
       </Row>
     </Container>
